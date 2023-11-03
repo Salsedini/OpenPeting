@@ -1,3 +1,3 @@
-export * from './lib/pizza.dto';
-export * from './lib/create-pizza.dto'
-export * from './lib/get-all-pizzas.dto'
+export * from './lib/user.dto';
+export * from './lib/create-user.dto'
+export * from './lib/get-all-users.dto'

@@ -2,7 +2,7 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreatePizzaDTO {
+export class CreateUserDTO {
 
     @ApiProperty()
     readonly name: string;
