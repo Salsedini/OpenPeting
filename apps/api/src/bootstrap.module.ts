@@ -8,7 +8,7 @@ import {
     EventStoreModule,
 } from '@aulasoftwarelibre/nestjs-eventstore';
 import configuration from './config/configuration';
-import { PizzaModule } from './pizza';
+import { UserModule } from './user';
 
 
 @Module({
@@ -17,7 +17,7 @@ import { PizzaModule } from './pizza';
             isGlobal: true,
             load: [configuration],
         }),
-        PizzaModule,
+        UserModule,
         CqrsModule,
         EventStoreModule.forRoot({
             connection: process.env.EVENTSTORE_URI || '',
