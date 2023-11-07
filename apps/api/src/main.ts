@@ -39,8 +39,8 @@ async function bootstrap() {
   });
 
   const options = new DocumentBuilder()
-    .addBearerAuth()
-    .setTitle('hdd-skeleton API')
+
+    .setTitle('OpenPeting API')
     .setVersion('1.0')
     .build();
 

@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Get,
     HttpCode,
     HttpException,
     HttpStatus,
@@ -15,6 +16,7 @@ import { UserService } from '../service/user.service';
 export class UserController {
     constructor(private readonly userService: UserService) { }
 
+
     @Post()
     @HttpCode(200)
     async create(@Body(new ValidationPipe()) createUserDTO: CreateUserDTO) {
@@ -25,5 +27,7 @@ export class UserController {
             (err) => { throw new HttpException(err.message, HttpStatus.CONFLICT) }
         );
     }
+
+
 
 }

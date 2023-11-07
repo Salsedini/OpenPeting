@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     HttpCode,
+    Param,
     ValidationPipe,
 } from '@nestjs/common';
 import { GetAllUsersDTO } from '@hdd-skeleton/contracts';
@@ -15,7 +16,7 @@ export class UsersController {
 
     @Get()
     @HttpCode(200)
-    async get(@Body(new ValidationPipe()) getAllUsersDTO: GetAllUsersDTO) {
+    async get(@Param(new ValidationPipe()) getAllUsersDTO: GetAllUsersDTO) {
         return await this.userService.getUsers(getAllUsersDTO);
 
     }

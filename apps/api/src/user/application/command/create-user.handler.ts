@@ -22,6 +22,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
         private readonly userRepository: UserRepository<User, UserId>,
     ) { }
 
+
     async execute(command: CreateUserCommand): Promise<Result<null, UserAlreadyExistsError>> {
 
         const id = UserId.generate();
@@ -43,3 +44,5 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
             });
     }
 }
+
+
