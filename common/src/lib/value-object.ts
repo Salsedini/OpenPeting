@@ -2,6 +2,7 @@ import { shallowEqual } from 'shallow-equal-object';
 
 interface ValueObjectProps {
   [index: string]: any;
+  [index: number]: any;
 }
 
 export abstract class ValueObject<T extends ValueObjectProps> {

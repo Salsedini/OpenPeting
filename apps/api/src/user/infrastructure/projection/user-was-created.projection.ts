@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 
 import { UserWasCreatedEvent } from '../../domain/event';
 import { USER_PROJECTION, UserDocument } from './user.schema';
-import { Logger } from '@nestjs/common';
 
 @EventsHandler(UserWasCreatedEvent)
 export class UserWasCreatedProjection
@@ -16,7 +15,6 @@ export class UserWasCreatedProjection
     ) { }
 
     async handle(event: UserWasCreatedEvent) {
-        Logger.log("AAAAAAAAAAAAAAa")
         const user = new this.userProjection({
             ...event.payload,
         });

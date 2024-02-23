@@ -1,6 +1,6 @@
 
-
 export interface UserRepository<User, UserId> {
-    find(id: UserId): Promise<User>;
+    delete(user: User): void;
+    find(id: UserId): Promise<User> | null;
     save(user: User): void;
 }

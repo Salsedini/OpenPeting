@@ -3,7 +3,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 import { USER_FINDER, UserFinder } from '../service';
 import { GetUsersQuery } from './get-users.query';
-import { UserDTO } from '@hdd-skeleton/contracts';
+import { UserDTO } from 'contracts/src/lib/User-dtos';
 
 @QueryHandler(GetUsersQuery)
 export class GetUsersHandler implements IQueryHandler {
@@ -12,7 +12,9 @@ export class GetUsersHandler implements IQueryHandler {
         private readonly userFinder: UserFinder,
     ) { }
 
-    async execute(_: GetUsersQuery): Promise<Array<UserDTO>> {
-        return this.userFinder.findAll();
+    async execute(query: GetUsersQuery): Promise<Array<UserDTO>> {
+
+        return await this.userFinder.findAll();
+
     }
 }

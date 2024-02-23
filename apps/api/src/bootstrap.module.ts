@@ -9,6 +9,7 @@ import {
 } from '@aulasoftwarelibre/nestjs-eventstore';
 import configuration from './config/configuration';
 import { UserModule } from './user';
+import { PetModule } from './pet';
 
 
 @Module({
@@ -18,6 +19,7 @@ import { UserModule } from './user';
             load: [configuration],
         }),
         UserModule,
+        PetModule,
         CqrsModule,
         EventStoreModule.forRoot({
             connection: process.env.EVENTSTORE_URI || '',

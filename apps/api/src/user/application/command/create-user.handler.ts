@@ -1,4 +1,4 @@
-import { Err, Ok, err, ok, Result } from 'neverthrow';
+import { err, ok, Result } from 'neverthrow';
 import { InjectAggregateRepository } from '@aulasoftwarelibre/nestjs-eventstore';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
@@ -9,6 +9,7 @@ import { User } from '../../domain/model';
 import {
     UserId,
     UserName,
+    UserSurname,
 } from '../../domain/model/value_object';
 
 import { UserRepository } from '../../domain/service';
@@ -22,12 +23,10 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
         private readonly userRepository: UserRepository<User, UserId>,
     ) { }
 
-
     async execute(command: CreateUserCommand): Promise<Result<null, UserAlreadyExistsError>> {
 
         const id = UserId.generate();
-
-        const foundUser = await this.userRepository.find(id)
+        const foundUser = await this.userRepository.find(id);
 
         return match(foundUser)
             .with(P.instanceOf(User), (foundUser: User) => {
@@ -37,7 +36,9 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
             .otherwise(() => {
 
                 const name = UserName.fromString(command.name);
-                const user = User.add(id, name);
+                const surname = UserSurname.fromString(command.surname);
+                const user = User.add(id, name, surname);
+                
                 this.userRepository.save(user);
 
                 return ok(null);

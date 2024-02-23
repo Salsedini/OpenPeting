@@ -1,23 +1,26 @@
 import {
-    Body,
     Controller,
     Get,
     HttpCode,
-    Param,
-    ValidationPipe,
 } from '@nestjs/common';
-import { GetAllUsersDTO } from '@hdd-skeleton/contracts';
 
 import { UserService } from '../service/user.service';
+import { ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
+import { GetAllUsersDTO } from 'contracts/src/lib/User-dtos/get-all-users.dto';
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly userService: UserService) { }
 
+    @ApiOperation({ summary: 'Get all Users' })
+    @ApiCreatedResponse({
+      description: 'Users received',
+      type: [GetAllUsersDTO],
+    })
     @Get()
     @HttpCode(200)
-    async get(@Param(new ValidationPipe()) getAllUsersDTO: GetAllUsersDTO) {
-        return await this.userService.getUsers(getAllUsersDTO);
+    async get() {
+        return await this.userService.getUsers();
 
     }
 

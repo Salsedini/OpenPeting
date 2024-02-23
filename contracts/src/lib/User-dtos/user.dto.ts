@@ -8,4 +8,14 @@ export class UserDTO {
 
   @ApiProperty()
   readonly name: string;
+
+  @ApiProperty()
+  readonly surname: string;
+
+  @ApiProperty()
+  readonly email: string;
+    
+  @ApiProperty()
+  readonly delete: boolean;
+  
 }

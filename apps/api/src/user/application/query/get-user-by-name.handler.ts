@@ -3,10 +3,8 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 import { USER_FINDER, UserFinder } from '../service';
 import { GetUserByNameQuery } from './get-user-by-name.query';
-import { UserDTO } from '@hdd-skeleton/contracts';
+import { UserDTO } from 'contracts/src/lib/User-dtos';
 import { UserName } from '../../domain/model/value_object';
-import { Err, Result } from 'neverthrow';
-import { UserError } from '../../domain/exception';
 
 @QueryHandler(GetUserByNameQuery)
 export class GetUserByNameHandler implements IQueryHandler {

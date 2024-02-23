@@ -1,2 +1,6 @@
 export * from './user-id'
 export * from './user-name'
+export * from './user-phone'
+export * from './user-mail'
+export * from './user-surname'
+export * from './user-picture'

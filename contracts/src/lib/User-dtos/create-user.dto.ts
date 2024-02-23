@@ -6,5 +6,8 @@ export class CreateUserDTO {
 
     @ApiProperty()
     readonly name: string;
+
+    @ApiProperty()
+    readonly surname: string;
     
 }
