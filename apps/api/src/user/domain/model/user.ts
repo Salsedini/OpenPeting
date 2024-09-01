@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@aulasoftwarelibre/nestjs-eventstore';
-import { UserId, UserMail, UserName, UserPhone, UserPicture } from './value_object';
+import { UserId, UserMail, UserName, UserPassword, UserPhone, UserPicture } from './value_object';
 import { UserWasCreatedEvent } from '../event/user-was-created.event';
 import { UserMailWasUpdatedEvent, UserNameWasUpdatedEvent, UserPhoneWasUpdatedEvent, UserPictureWasUpdatedEvent, UserSurnameWasUpdatedEvent } from '../event/user-was-updated.event';
 import { UserWasDeletedEvent } from '../event/user-was-deleted-event';
@@ -8,23 +8,31 @@ import { UserSurname } from './value_object/user-surname';
 export class User extends AggregateRoot {
     private _id: UserId;
     private _name: UserName;
+    private _password: UserPassword;
     private _surname: UserSurname;
     private _phone?: UserPhone
-    private _mail?: UserMail;
+    private _email?: UserMail;
     private _picture?: UserPicture;
     private _deleted: boolean; 
+    private _role: string;
 
     public static add(
         id: UserId,
         name: UserName,
+        password: UserPassword,
+        email: UserMail,
         surname: UserSurname,
+        role: string,
     ): User {
         const user = new User();
         
         const event = new UserWasCreatedEvent(
             id.value,
             name.value,
+            password.value,
+            email.value,
             surname.value,
+            role,
             false
         );
 
@@ -36,6 +44,10 @@ export class User extends AggregateRoot {
     private onUserWasCreatedEvent(event: UserWasCreatedEvent): void {
         this._id = UserId.fromString(event.id);
         this._name = UserName.fromString(event.name);
+        this._password = UserPassword.fromString(event.password);
+        this._email = UserMail.fromString(event.email);
+        this._surname = UserSurname.fromString(event.surname);
+        this._role = event.role;
         this._deleted = event.deleted;
     }
 
@@ -54,9 +66,9 @@ export class User extends AggregateRoot {
         this.apply(new UserPhoneWasUpdatedEvent(this._id.value, phone.value));
     }
 
-    updateMail(mail: UserMail) {
-        if (this._mail == undefined || this.mail.equals(mail) == false)
-        this.apply(new UserMailWasUpdatedEvent(this._id.value, mail.value));
+    updateMail(email: UserMail) {
+        if (this._email == undefined || this.email.equals(email) == false)
+        this.apply(new UserMailWasUpdatedEvent(this._id.value, email.value));
     }
 
     updatePicture(picture: UserPicture) {
@@ -77,7 +89,7 @@ export class User extends AggregateRoot {
     }
 
     private onUserMailWasUpdatedEvent(event: UserMailWasUpdatedEvent) {
-        this._mail = UserMail.fromString(event.mail);
+        this._email = UserMail.fromString(event.email);
     }
 
     private onUserPictureWasUpdatedEvent(event: UserPictureWasUpdatedEvent) {
@@ -100,12 +112,16 @@ export class User extends AggregateRoot {
         return this._name;
     }
 
+    public get password(): UserPassword {
+        return this._password;
+    }
+
     public get phone(): UserPhone {
         return this._phone;
     }
 
-    public get mail(): UserName {
-        return this._mail;
+    public get email(): UserName {
+        return this._email;
     }
 
     public get deleted(): boolean{

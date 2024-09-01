@@ -9,10 +9,12 @@ export const UserSchema = new Schema(
     {
         _id: String,
         name: String,
+        password: String,
         surname: String,
         phone: Number,
         email: String,
         picture: String,
+        role: [String],
         delete: Boolean,
 
     },

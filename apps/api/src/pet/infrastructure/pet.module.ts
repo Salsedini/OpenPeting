@@ -12,6 +12,7 @@ import {
     PetAgeWasUpdatedEvent, 
     PetDescriptionWasUpdatedEvent, 
     PetNameWasUpdatedEvent, 
+    PetOwnerIdWasUpdatedEvent, 
     PetPictureWasUpdatedEvent, 
     PetSizeWasUpdatedEvent, 
     PetWasCreatedEvent, 
@@ -28,6 +29,8 @@ import { PetProviders } from './pet.providers';
 import { PetsController } from './controller/pets.controller';
 import { UpdatePetDTO } from 'contracts/src/lib/Pet-dtos/update-pet.dto';
 import { CreatePetDTO } from 'contracts/src/lib/Pet-dtos/create-pet.dto';
+import { UserService } from '../../user/infrastructure/service';
+import { UpdatePetOwnerIdDTO } from 'contracts/src/lib/Pet-dtos';
 
 
 @Module({
@@ -40,6 +43,7 @@ import { CreatePetDTO } from 'contracts/src/lib/Pet-dtos/create-pet.dto';
                     event.aggregateId,
                     event.payload.name,
                     event.payload.ownerId,
+                    event.payload.gender,
                     event.payload.size,
                     event.payload.type,
                     event.payload.age,
@@ -49,6 +53,11 @@ import { CreatePetDTO } from 'contracts/src/lib/Pet-dtos/create-pet.dto';
                 new PetNameWasUpdatedEvent(
                     event.aggregateId,
                     event.payload.name,
+                ),
+            PetOwnerIdWasUpdatedEvent: (event: Event<UpdatePetOwnerIdDTO>) =>  
+                new PetOwnerIdWasUpdatedEvent(
+                    event.aggregateId,
+                    event.payload.ownerId,
                 ),
             PetSizeWasUpdatedEvent: (event: Event<UpdatePetDTO>) =>  
                 new PetSizeWasUpdatedEvent(
@@ -88,6 +97,7 @@ import { CreatePetDTO } from 'contracts/src/lib/Pet-dtos/create-pet.dto';
         ...ProjectionHandlers,
         ...PetProviders,
         PetService,
+        UserService
     ],
 })
 export class PetModule { }

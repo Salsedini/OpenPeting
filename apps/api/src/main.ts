@@ -18,28 +18,14 @@ async function bootstrap() {
 
   app.setGlobalPrefix(GLOBAL_PREFIX);
 
+  
   app.enableCors({
-    credentials: true,
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    origin: 'http://localhost:3000',
-    allowedHeaders: [
-      'Accept-Language',
-      'Access-Control-Allow-Origin',
-      'Access-Control-Allow-Methods',
-      'Access-Control-Allow-Headers',
-    ],
-    exposedHeaders: [
-      'Content-Length',
-      'Content-Type',
-      'Accept-Language',
-      'Access-Control-Allow-Origin',
-      'Access-Control-Allow-Methods',
-      'Access-Control-Allow-Headers',
-    ],
+    credentials: true,
   });
 
   const options = new DocumentBuilder()
-
     .setTitle('OpenPeting API')
     .setVersion('1.0')
     .build();

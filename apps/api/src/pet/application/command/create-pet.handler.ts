@@ -8,6 +8,7 @@ import { match, P } from 'ts-pattern';
 import { Pet } from '../../domain/model';
 import {
     PetAge,
+    PetGender,
     PetId,
     PetName,
     PetSize,
@@ -40,10 +41,12 @@ export class CreatePetHandler implements ICommandHandler<CreatePetCommand> {
                 
                 const name = PetName.fromString(command.name);
                 const ownerId = UserId.fromString(command.ownerId);
+                const gender = PetGender.fromString(command.gender);
                 const size = PetSize.fromString(command.size);
                 const type = PetType.fromString(command.type);
                 const age = PetAge.fromNumber(command.age);
-                const pet = Pet.add(id, ownerId, name, size, type, age);
+                
+                const pet = Pet.add(id, name, ownerId, gender, size, type, age);
                 
                 this.petRepository.save(pet);
 

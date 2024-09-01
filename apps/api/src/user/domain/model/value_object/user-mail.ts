@@ -1,7 +1,7 @@
 import { ValueObject } from '@hdd-skeleton/common';
-import { InvalidUserMailError } from '../../exception/invalid-user-mail-error';
 import { isEmail } from 'class-validator';
 import 'reflect-metadata';
+import { InvalidUserMailError } from '../../exception';
 
 
 
@@ -10,13 +10,13 @@ export class UserMail extends ValueObject<{ value: string }> {
     
     email: string;
 
-    public static fromString(mail: string): UserMail {
+    public static fromString(email: string): UserMail {
 
-        if(!isEmail(mail)){
-            throw InvalidUserMailError.withInvalidMail(mail) 
+        if(!isEmail(email)){
+            throw InvalidUserMailError.withInvalidMail(email) 
         }
 
-        return new UserMail({ value: mail });
+        return new UserMail({ value: email });
     }
 
     get value() {
@@ -25,7 +25,7 @@ export class UserMail extends ValueObject<{ value: string }> {
 }
 
 //export class UserMail extends ValueObject<{ value: string }> {
-//    @isEmail({}, { message: 'Invalid email format' })
+//    @isEemail({}, { message: 'Invalid eemail format' })
 //    private _value: string;
 //
 //    private constructor(props: { value: string }) {
@@ -33,12 +33,12 @@ export class UserMail extends ValueObject<{ value: string }> {
 //        this._value = props.value;
 //    }
 //
-//    public static fromString(mail: string): UserMail {
-//        if (mail === undefined || mail.length < 5) {
-//            throw InvalidUserMailError.withInvalidMail(mail);
+//    public static fromString(email: string): UserMail {
+//        if (email === undefined || email.length < 5) {
+//            throw InvalidUserMailError.withInvalidMail(email);
 //        }
 //
-//        return new UserMail({ value: mail });
+//        return new UserMail({ value: email });
 //    }
 //
 //    get value() {

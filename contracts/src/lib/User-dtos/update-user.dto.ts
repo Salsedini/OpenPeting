@@ -14,7 +14,7 @@ export class UpdateUserDTO {
   readonly phone: number;
 
   @ApiProperty()
-  readonly mail: string;
+  readonly email: string;
 
   @ApiProperty()
   readonly picture: string;

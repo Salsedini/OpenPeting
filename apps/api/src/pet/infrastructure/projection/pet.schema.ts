@@ -10,6 +10,7 @@ export const PetSchema = new Schema(
         _id: String,
         name: String,
         ownerId: String,
+        gender: String,
         size: String,
         type: String,
         age: Number,

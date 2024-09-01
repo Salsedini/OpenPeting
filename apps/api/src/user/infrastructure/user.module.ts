@@ -32,7 +32,10 @@ import { UserSurnameWasUpdatedEvent, UserPhoneWasUpdatedEvent, UserMailWasUpdate
                 new UserWasCreatedEvent(
                     event.aggregateId,
                     event.payload.name,
+                    event.payload.password,
+                    event.payload.email,
                     event.payload.surname,
+                    event.payload.role,
                     false
                 ),
             UserWasDeletedEvent: (event: Event) =>
@@ -57,7 +60,7 @@ import { UserSurnameWasUpdatedEvent, UserPhoneWasUpdatedEvent, UserMailWasUpdate
             UserMailWasUpdatedEvent: (event: Event<UpdateUserDTO>) =>  
             new UserMailWasUpdatedEvent(
                 event.aggregateId,
-                event.payload.mail,
+                event.payload.email,
             ),
             UserPictureWasUpdatedEvent: (event: Event<UpdateUserDTO>) =>  
             new UserPictureWasUpdatedEvent(

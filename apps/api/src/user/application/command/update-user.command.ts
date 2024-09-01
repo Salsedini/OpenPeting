@@ -6,7 +6,7 @@ export class UpdateUserCommand implements ICommand {
         public readonly name: string,
         public readonly surname: string,
         public readonly phone: number,
-        public readonly mail: string,
+        public readonly email: string,
         public readonly picture: string,
     ) { }
 }

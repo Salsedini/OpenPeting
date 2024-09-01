@@ -9,6 +9,9 @@ export class CreatePetDTO {
 
     @ApiProperty()
     readonly ownerId: string;
+
+    @ApiProperty()
+    readonly gender: string;
     
     @ApiProperty()
     readonly size: string;

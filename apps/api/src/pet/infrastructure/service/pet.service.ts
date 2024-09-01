@@ -8,6 +8,8 @@ import { PetError } from '../../domain/exception';
 import { GetPetsQuery } from '../../application/query/get-pets.query';
 import { UpdatePetCommand } from '../../application/command/update-pet.command';
 import { DeletePetCommand } from '../../application/command/delete-pet.command';
+import { GetPetByIdQuery } from '../../application/query/get-pet-by-id.query';
+import { UpdatePetOwnerIdCommand } from '../../application/command/update-pet-owner-id..command';
 
 @Injectable()
 export class PetService {
@@ -16,10 +18,15 @@ export class PetService {
         private readonly queryBus: QueryBus,
     ) { }
 
+    async getPetById(id: string): Promise<PetDTO> {
+        return await this.queryBus.execute<IQuery, PetDTO | null>(new GetPetByIdQuery(id));
+    }
+
     async createPet(createPetDTO: CreatePetDTO): Promise<Result<null, PetError>> {
         return await this.commandBus.execute<ICommand, Result<null, PetError>>(new CreatePetCommand(
             createPetDTO.name,
             createPetDTO.ownerId,
+            createPetDTO.gender,
             createPetDTO.size,
             createPetDTO.type,
             createPetDTO.age,
@@ -44,6 +51,16 @@ export class PetService {
 
     async deletePet(id: string): Promise<Result<null, PetError>>{
         return await this.commandBus.execute<ICommand, Result<null, PetError>>(new DeletePetCommand(id));
+    }
+
+    async UpdatePetOwnerId(petId: string, newOwnerId: string): Promise<Result<null, PetError>> {
+
+        console.log("UpdatePetOwnerId", newOwnerId);
+
+        return await this.commandBus.execute<ICommand, Result<null, PetError>>(new UpdatePetOwnerIdCommand(
+            petId,
+            newOwnerId,
+        ));
     }
 
 }

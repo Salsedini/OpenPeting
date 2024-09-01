@@ -16,7 +16,7 @@ export class UserMailWasUpdatedProjection
   async handle(event: UserMailWasUpdatedEvent) {
     await this.userProjection
       .findByIdAndUpdate(event.aggregateId, {
-        mail: event.mail,
+        email: event.email,
       })
       .exec();
   }

@@ -10,6 +10,9 @@ export class UserDTO {
   readonly name: string;
 
   @ApiProperty()
+  readonly password: string;
+
+  @ApiProperty()
   readonly surname: string;
 
   @ApiProperty()

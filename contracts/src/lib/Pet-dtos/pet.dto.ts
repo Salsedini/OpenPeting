@@ -10,6 +10,9 @@ export class PetDTO {
   readonly name: string;
 
   @ApiProperty()
+  readonly gender: string;
+
+  @ApiProperty()
   readonly size: string;
 
   @ApiProperty()

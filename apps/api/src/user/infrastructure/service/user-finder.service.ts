@@ -4,7 +4,7 @@ import { UserDTO } from 'contracts/src/lib/User-dtos/user.dto';
 import { Model } from 'mongoose';
 
 import { UserFinder } from '../../application/service/user-finder.service';
-import { UserId, UserName } from '../../domain/model/value_object';
+import { UserId, UserMail, UserName } from '../../domain/model/value_object';
 import { USER_PROJECTION, UserDocument } from '../projection';
 
 @Injectable()
@@ -26,5 +26,8 @@ export class MongoDBUserFinder implements UserFinder {
         return this.userProjection.findById(id.value).exec();
     }
 
+    findByEmail(email: UserMail): Promise<UserDTO> {
+        return this.userProjection.findOne({ email: email.value }).exec();
+    }
 
 }

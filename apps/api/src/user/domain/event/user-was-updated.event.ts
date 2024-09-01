@@ -27,10 +27,10 @@ export class UserPhoneWasUpdatedEvent extends Event {
 }
 
 export class UserMailWasUpdatedEvent extends Event {
-    constructor(public readonly id: string, public readonly mail: string) {
+    constructor(public readonly id: string, public readonly email: string) {
         super(id, {
             _id: id,
-            mail,
+            email,
         });
     }
 }

@@ -20,7 +20,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand>{
 
         const id = UserId.fromString(command.id);
         const foundUser = await this.userRepository.find(id);
-
+        
         if (!foundUser){
             return err(UserNotFoundError.withId(id));
         }
@@ -34,8 +34,8 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand>{
         const phone = UserPhone.fromNumber(command.phone);
         foundUser.updatePhone(phone);
 
-        const mail = UserMail.fromString(command.mail);
-        foundUser.updateMail(mail);
+        const email = UserMail.fromString(command.email);
+        foundUser.updateMail(email);
 
         const picture = UserPicture.fromString(command.picture);
         foundUser.updatePicture(picture);

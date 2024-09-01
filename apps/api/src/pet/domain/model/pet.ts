@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@aulasoftwarelibre/nestjs-eventstore';
-import { PetAge, PetDescription, PetId, PetName, PetPicture, PetSize, PetType } from './value_object';
+import { PetAge, PetDescription, PetGender, PetId, PetName, PetPicture, PetSize, PetType } from './value_object';
 import { PetWasCreatedEvent } from '../event/pet-was-created.event';
 import { PetWasDeletedEvent } from '../event/pet-was-deleted-event';
 import { 
@@ -16,6 +16,7 @@ export class Pet extends AggregateRoot {
     private _id: PetId;
     private _ownerId: UserId;
     private _name: PetName;
+    private _gender: PetGender;
     private _size: PetSize;
     private _type: PetType;
     private _age: PetAge;
@@ -25,8 +26,9 @@ export class Pet extends AggregateRoot {
 
     public static add(
         id: PetId,
-        ownerId: UserId,
         name: PetName,
+        ownerId: UserId,
+        gender: PetGender,
         size: PetSize,
         type: PetType,
         age: PetAge,
@@ -37,6 +39,7 @@ export class Pet extends AggregateRoot {
             id.value,
             name.value,
             ownerId.value,
+            gender.value,
             size.value,
             type.value,
             age.value,
@@ -52,6 +55,7 @@ export class Pet extends AggregateRoot {
         this._id = PetId.fromString(event.id);
         this._name = PetName.fromString(event.name);
         this._ownerId = UserId.fromString(event.ownerId);
+        this._gender = PetGender.fromString(event.gender)
         this._size = PetSize.fromString(event.size);
         this._type = PetType.fromString(event.type);
         this._age = PetAge.fromNumber(event.age);
@@ -63,7 +67,7 @@ export class Pet extends AggregateRoot {
     }
 
     updateOwnerId(ownerId: UserId) {
-        if (this._name.equals(ownerId) == false) this.apply(new PetOwnerIdWasUpdatedEvent(this._id.value, ownerId.value));
+        if (this._ownerId.equals(ownerId) == false) this.apply(new PetOwnerIdWasUpdatedEvent(this._id.value, ownerId.value));
     }
 
     updateSize(size: PetSize) {
@@ -126,6 +130,10 @@ export class Pet extends AggregateRoot {
 
     public get ownerId(): UserId {
         return this._ownerId;
+    }
+
+    public get gender(): PetGender {
+        return this._gender;
     }
 
     public get size(): PetSize {
